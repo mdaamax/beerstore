@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
+.navbar-brand{
+    font-family: 'Rampart One', cursive;
+    font-size: 35px;
+}
 body{
     margin: 0;
 }
@@ -20,10 +25,11 @@ body{
     color: #000000;
 }
 .text_logo>h1 {
-    font-size:60px;
-    background: -webkit-linear-gradient(#5b0404, #050541);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: calc(60px + (16 + 16 * 0.7) * ((100vw - 320px) / 1280));
+    /*font-size:90px;*/
+    /*background: -webkit-linear-gradient(#5b0404, #000000);*/
+    /*-webkit-background-clip: text;*/
+    /*-webkit-text-fill-color: transparent;*/
 
 }
 .menu{
@@ -138,66 +144,66 @@ section{
     padding-top: 60px;
     padding-bottom: 50px;
 }
-.skillbar {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width: 60%;
-}
-.skillbar_1 {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width: 50%;
-}
-.skillbar_2 {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width: 30%;
-}
-.skillbar_3 {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width:80%;
-}
-.skillbar_4 {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width: 40%;
-}
-.skillbar_5 {
-    background: #000000;
-    display: block;
-    height:30px;
-    margin-bottom:10px;
-    position: relative;
-    width: 60%;
-}
+/*.skillbar {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width: 60%;*/
+/*}*/
+/*.skillbar_1 {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width: 50%;*/
+/*}*/
+/*.skillbar_2 {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width: 30%;*/
+/*}*/
+/*.skillbar_3 {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width:80%;*/
+/*}*/
+/*.skillbar_4 {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width: 40%;*/
+/*}*/
+/*.skillbar_5 {*/
+/*    background: #000000;*/
+/*    display: block;*/
+/*    height:30px;*/
+/*    margin-bottom:10px;*/
+/*    position: relative;*/
+/*    width: 60%;*/
+/*}*/
 
-.skillbar-title {
-    color: #323232;
-    font-size: 12px;
-    left:15px;
-    position: relative;
-    top: 5px;
-}
-.skillbar-title h3{
-    font-size:14px;
-    color: #ffffff;
-}
+/*.skillbar-title {*/
+/*    color: #323232;*/
+/*    font-size: 12px;*/
+/*    left:15px;*/
+/*    position: relative;*/
+/*    top: 5px;*/
+/*}*/
+/*.skillbar-title h3{*/
+/*    font-size:14px;*/
+/*    color: #ffffff;*/
+/*}*/
 
 #brands{
     padding-top:50px;
@@ -221,9 +227,9 @@ textarea.form-control {
 input::placeholder {
     font-weight: bold;
 }
-.carusrel{
-    background: #cecece;
-}
+/*.carusrel{*/
+/*    background: #cecece;*/
+/*}*/
 .thank_you{
     background: #cecece;
 }
@@ -261,9 +267,9 @@ footer {
     padding-bottom: 40px;
     padding-top: 50px;
 }
-.videos{
-    background: black;
-}
+/*.videos{*/
+/*    background: black;*/
+/*}*/
 .link-light{
     padding-left: 50%;
 }
