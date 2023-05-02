@@ -45,7 +45,7 @@ session_start();
                             <?php if(!empty($_SESSION['user'])):?>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><?=$_SESSION['user']['username']?></a>
+                                <a class="nav-link" href="#">Здравствуйте, <?=$_SESSION['user']['username']?>!</a>
                             </li>
                             <?php endif;?>
                             <li class="nav-item">

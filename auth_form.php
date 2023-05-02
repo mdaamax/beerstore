@@ -13,6 +13,7 @@ if (!empty($_POST['username'])
     if ($result['result']) {
         $_SESSION['user']['username'] = $username;
         $_SESSION['user']['id'] = $result['user']['id'];
+        $_SESSION['user']['is_admin'] = $result['user']['is_admin'];
         header('Location: index.php');
     } else {
         $errorMessage = 'Неправильный логин или пароль';
