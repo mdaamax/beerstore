@@ -41,16 +41,18 @@ session_start();
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#"><strong>BEERMAX</strong></a>
+                                <img src="https://cdn-icons-png.flaticon.com/512/6957/6957439.png" alt="Logo" width="50" height="48" class="d-inline-block ">
                             </li>
                             <?php if(!empty($_SESSION['user'])):?>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Здравствуйте, <?=$_SESSION['user']['username']?>!</a>
                             </li>
-                            <?php endif;?>
+                            <?php else:?>
                             <li class="nav-item">
                                 <a class="nav-link" href="register_form.php">Войти в профиль</a>
                             </li>
+                            <?php endif;?>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Выйти</a>
                             </li>
