@@ -17,6 +17,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -40,9 +47,9 @@ SET default_with_oids = false;
 
 CREATE TABLE public.catalog (
     id integer NOT NULL,
-    title character varying(100) NOT NULL,
-    type_id integer NOT NULL,
-    alc character varying(10)
+    title character varying(120) NOT NULL,
+    description text,
+    price numeric NOT NULL
 );
 
 
@@ -71,84 +78,15 @@ ALTER SEQUENCE public.catalog_id_seq OWNED BY public.catalog.id;
 
 
 --
--- Name: comment; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.comment (
-    id integer NOT NULL,
-    text text NOT NULL,
-    user_id integer NOT NULL,
-    item_id integer NOT NULL
-);
-
-
-ALTER TABLE public.comment OWNER TO postgres;
-
---
--- Name: comment_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.comment_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.comment_id_seq OWNER TO postgres;
-
---
--- Name: comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.comment_id_seq OWNED BY public.comment.id;
-
-
---
--- Name: type; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.type (
-    id integer NOT NULL,
-    name character varying(100) NOT NULL
-);
-
-
-ALTER TABLE public.type OWNER TO postgres;
-
---
--- Name: type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.type_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.type_id_seq OWNER TO postgres;
-
---
--- Name: type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.type_id_seq OWNED BY public.type.id;
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    login character varying(100) NOT NULL,
-    password character varying(100) NOT NULL,
-    is_admin boolean DEFAULT false NOT NULL
+    name character varying(50) NOT NULL,
+    login character varying(50) NOT NULL,
+    password_hash character varying(250) NOT NULL,
+    is_admin integer DEFAULT 0 NOT NULL
 );
 
 
@@ -184,20 +122,6 @@ ALTER TABLE ONLY public.catalog ALTER COLUMN id SET DEFAULT nextval('public.cata
 
 
 --
--- Name: comment id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comment ALTER COLUMN id SET DEFAULT nextval('public.comment_id_seq'::regclass);
-
-
---
--- Name: type id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type ALTER COLUMN id SET DEFAULT nextval('public.type_id_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -208,23 +132,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: catalog; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.catalog (id, title, type_id, alc) FROM stdin;
-\.
-
-
---
--- Data for Name: comment; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.comment (id, text, user_id, item_id) FROM stdin;
-\.
-
-
---
--- Data for Name: type; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.type (id, name) FROM stdin;
+COPY public.catalog (id, title, description, price) FROM stdin;
+1	Кофеварка капельная	Кофеварка капельная выполнена в элегантном стиле и создана для любителей свежего кофе. Встроенный термоблок обеспечивает качественное приготовление кофе с насыщенным ароматом и естественным вкусом. Кофейник емкостью 1.5 литра изготовлен из прозрачного стекла и оборудован ручкой из термостойкого пластика.	2599
+2	Хлебопечь	Хлебопечь поможет вам в домашних условиях приготовить вкусный и ароматный хлеб.	4899
+3	Миксер	Миксер представлен в серебристом корпусе и является очень мощным прибором, позволяющим быстро смешивать и взбивать продукты для кремов, безе, чтобы создать настоящий кулинарный шедевр легко. Это ручной миксер, конструкция которого предусматривает наличие удобной ручки, обеспечивающей удобное положение руки в процессе взбивания.	899
+4	Кофеварка капельная	Кофеварка капельная выполнена в элегантном стиле и создана для любителей свежего кофе. Встроенный термоблок обеспечивает качественное приготовление кофе с насыщенным ароматом и естественным вкусом. Кофейник емкостью 1.5 литра изготовлен из прозрачного стекла и оборудован ручкой из термостойкого пластика.	2599
+5	Хлебопечь	Хлебопечь поможет вам в домашних условиях приготовить вкусный и ароматный хлеб.	4899
+6	Миксер	Миксер представлен в серебристом корпусе и является очень мощным прибором, позволяющим быстро смешивать и взбивать продукты для кремов, безе, чтобы создать настоящий кулинарный шедевр легко. Это ручной миксер, конструкция которого предусматривает наличие удобной ручки, обеспечивающей удобное положение руки в процессе взбивания.	899
 \.
 
 
@@ -232,11 +146,9 @@ COPY public.type (id, name) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, login, password, is_admin) FROM stdin;
-1	1	$2y$10$TcPfCRq/0gSQh9uOEBNHDuIteEErvGPgMBf55I/tQEa8w8eHf9C4.	f
-2	12	$2y$10$8yfSgO.904WsXMGW3Er1g.zmy6Xvh9KbCqqc9yHcyXQ0TDXRqstmW	f
-3	12345	$2y$10$IVk.o3kSkL3oYFvcEAzCyuyVnabcK1FosYY48bLUIBypQuzHT19sq	f
-4	1111	$2y$10$MpMMAoOGDYx/SbiQvXvLfOge7VUrgGtiLMRS/vIEuK0OqGmX47DAa	f
+COPY public.users (id, name, login, password_hash, is_admin) FROM stdin;
+1	admin	admin	$2y$10$G9mhZHzTIReQY3OhqebeQuF9SXqWylXwqP6ukw23MHBrm94yZTfAi	1
+2	user	user	$2y$10$Y/gftkXEwWbTZPDmO5QJm.fbM/2MiOplLNLWufWpUi32k.TWKbhW2	0
 \.
 
 
@@ -244,28 +156,14 @@ COPY public.users (id, login, password, is_admin) FROM stdin;
 -- Name: catalog_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.catalog_id_seq', 1, false);
-
-
---
--- Name: comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.comment_id_seq', 1, false);
-
-
---
--- Name: type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.type_id_seq', 1, false);
+SELECT pg_catalog.setval('public.catalog_id_seq', 6, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --
@@ -277,35 +175,11 @@ ALTER TABLE ONLY public.catalog
 
 
 --
--- Name: comment comment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comment
-    ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
-
-
---
--- Name: type type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type
-    ADD CONSTRAINT type_pkey PRIMARY KEY (id);
-
-
---
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: comment comment_catalog_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.comment
-    ADD CONSTRAINT comment_catalog_id_fk FOREIGN KEY (item_id) REFERENCES public.catalog(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

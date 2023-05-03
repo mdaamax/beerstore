@@ -1,4 +1,7 @@
 <?php
+require 'functions.php';
+$product_id = $_GET['product_id'];
+$product= getProductById($product_id);
 ?>
 
 <!doctype html>
@@ -39,7 +42,7 @@
         <div class="row">
 
             <div class="col-12">
-                <h1>Название продукта</h1>
+                <h1><?=$product['title']?> (Алкоголь <?=$product['alc']?>% <?=$product['type']?>)</h1>
             </div>
 
             <div class="col-sm-4">
@@ -54,7 +57,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card-price">
-                            150 РУБЛЕЙ
+                            <?=$product['price']?> РУБЛЕЙ
                             <span class="item-status">
                                     <i class="fas fa-check text-success"></i> В наличии
                                 </span>
@@ -77,11 +80,7 @@
 
 
                 <div class="card-desc">
-                    <p> Хмель в пивоварении применяют с древнейших времен.
-                        Именно он придает пенному напитку характерный вкус и аромат.
-                        Для изготовления пива используют плоды обыкновенного хмеля – многолетнего
-                        широколиственного вьющегося растения семейства тутовых. Оно предпочитает влажные леса,
-                        расположенные вблизи водоемов. Цветки хмеля похожи на шишки </p>
+                    <p> <?=$product['description']?></p>
                 </div>
 
             </div>

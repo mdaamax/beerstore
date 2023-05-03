@@ -35,20 +35,33 @@ function login($login, $password)
     ];
 }
 
-function createTopic($topicTitle, $message, $userId)
+function createProduct($title, $type_id, $alc,$price,$description)
 {
-    $topic_id = insert("INSERT INTO topics (title) VALUES (:title)", [
-        'title' => $topicTitle,
-    ]);
-    $message_id = insert("INSERT INTO messages (text, user_id, topic_id)
-                            VALUES (:text, :user_id, :topic_id)",
+
+    $product_id = insert("INSERT INTO catalog (title, type_id, alc,price,description)
+                            VALUES (:title, :type_id, :alc , :price, :description)",
         [
-            'text' => $message,
-            'user_id' => $userId,
-            'topic_id' => $topic_id,
+            'title' => $title,
+            'type_id' => $type_id,
+            'alc' => $alc,
+            'price' => $price,
+            'description' => $description,
         ]
     );
-    return isset($message_id);
+    return isset($product_id);
+}
+
+function createProductType($name)
+{
+
+    $product_type = insert("INSERT INTO type (name)
+                            VALUES (:name)",
+        [
+            'name' => $name,
+
+        ]
+    );
+    return isset($product_type);
 }
 
 function createMessage($message, $userId, $topicId)
@@ -62,4 +75,21 @@ function createMessage($message, $userId, $topicId)
         ]
     );
     return isset($message_id);
+}
+
+function getProductTypes(){
+    $types = select('SELECT * FROM TYPE');
+    return $types;
+}
+
+function getProductList(){
+    $list = select('SELECT title,description,id FROM catalog ORDER BY id');
+    return $list;
+}
+function getProductById($product_id){
+    $list = select('SELECT title,description,catalog.id ,price,alc,name as type FROM  catalog
+left join type t on t.id = catalog.type_id where catalog.id=:id',[
+        'id' => $product_id
+    ]);
+    return $list[0];
 }

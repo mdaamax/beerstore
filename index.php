@@ -1,5 +1,7 @@
 <?php
 session_start();
+require 'functions.php';
+$productList = getProductList();
 ?>
 
 
@@ -21,9 +23,10 @@ session_start();
 
     <div class="container-fluid">
         <nav class="navbar navbar-dark bg-dark fixed-top">
-            <div class="container-fluid" >
+            <div class="container-fluid">
                 <a class="navbar-brand" href="#">
-                    <img src="https://cdn-icons-png.flaticon.com/512/761/761767.png" alt="Logo" width="50" height="48" class="d-inline-block ">
+                    <img src="https://cdn-icons-png.flaticon.com/512/761/761767.png" alt="Logo" width="50" height="48"
+                         class="d-inline-block ">
                     </strong>BEERMAX</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -41,21 +44,30 @@ session_start();
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#"><strong>BEERMAX</strong></a>
-<!--                                <img src="https://cdn-icons-png.flaticon.com/512/6957/6957439.png" alt="Logo" width="50" height="48" class="d-inline-block ">-->
+                                <!--                                <img src="https://cdn-icons-png.flaticon.com/512/6957/6957439.png" alt="Logo" width="50" height="48" class="d-inline-block ">-->
                             </li>
-                            <?php if(!empty($_SESSION['user'])):?>
+                            <?php if (!empty($_SESSION['user'])): ?>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Здравствуйте, <?=$_SESSION['user']['username']?>!</a>
-                            </li>
-                            <?php else:?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="register_form.php">Войти в профиль</a>
-                            </li>
-                            <?php endif;?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Выйти</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Здравствуйте, <?= $_SESSION['user']['username'] ?>!</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="logout.php">Выйти</a>
+                                </li>
+                            <?php if (!empty($_SESSION['user']['is_admin'])): ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="create_product_type.php">Создание чего-то о пиве</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="create_product.php">Создание товара</a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="register_form.php">Войти в профиль</a>
+                                </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="#1">Что-то о пиве</a>
                             </li>
@@ -225,81 +237,21 @@ session_start();
 <section class="back">
     <div class="container text-center">
         <div class="row align-items-start">
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Допустим пиво</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <hr>
-                        <a class="btn btn-primary" href="product.php" role="button">Купить</a>
+            <?php foreach ($productList as $product): ?>
+                <div class="col gy-5">
+                    <div class="card" style="width: 20rem;">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><?=$product['title']?></h5>
+                            <p class="card-text"><?=$product['description']?></p>
+                            <hr>
+                            <a class="btn btn-primary" href="product.php?product_id=<?=$product['id']?>" role="button">Открыть</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
-                            составлять основную часть содержимого карты.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="col gy-5">
-                <div class="card" style="width: 20rem;">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
-                         class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Заголовок карточки</h5>
-                        <p class="card-text">Небольшой пример текста, который должен основываться на наы.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <?php endforeach; ?>
+
         <div class="more">
             <a href="#" class="link-dark"><strong>more</strong></a>
         </div>
