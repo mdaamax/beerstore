@@ -41,7 +41,7 @@ session_start();
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#"><strong>BEERMAX</strong></a>
-                                <img src="https://cdn-icons-png.flaticon.com/512/6957/6957439.png" alt="Logo" width="50" height="48" class="d-inline-block ">
+<!--                                <img src="https://cdn-icons-png.flaticon.com/512/6957/6957439.png" alt="Logo" width="50" height="48" class="d-inline-block ">-->
                             </li>
                             <?php if(!empty($_SESSION['user'])):?>
 
@@ -61,26 +61,10 @@ session_start();
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#2">Наши товары</a>
-<!--                            </li>-->
-                            <!--                            <li class="nav-item dropdown">-->
-                            <!--                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"-->
-                            <!--                                   aria-expanded="false">-->
-                            <!--                                    Выпадающий список-->
-                            <!--                                </a>-->
-                            <!--                                <ul class="dropdown-menu dropdown-menu-dark">-->
-                            <!--                                    <li><a class="dropdown-item" href="#">Действие</a></li>-->
-                            <!--                                    <li><a class="dropdown-item" href="#">Другое действие</a></li>-->
-                            <!--                                    <li>-->
-                            <!--                                        <hr class="dropdown-divider">-->
-                            <!--                                    </li>-->
-                            <!--                                    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
-                            <!--                                </ul>-->
-                            <!--                            </li>-->
-<!--                        </ul>-->
-                        <!--                        <form class="d-flex mt-3" role="search">-->
-                        <!--                            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">-->
-                        <!--                            <button class="btn btn-success" type="submit">Поиск</button>-->
-                        <!--                        </form>-->
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary" href="Basket.php" role="button">Корзина</a>
+                            </li>
                     </div>
                 </div>
             </div>
@@ -246,10 +230,11 @@ session_start();
                     <img src="https://images.squarespace-cdn.com/content/v1/5287bee0e4b0fd595cc2a60f/1496155488416-4GXO8IFEZSKI8O4N3ZSB/ke17ZwdGBToddI8pDm48kMidd_fVERlblIIVuIb_11BZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx10iUG6tfMgCBB2It1X-YJ7A5R-MhySWbfhJf8kid0Axv9bsT1zvOjTQZv2qL2czQ/Bottle-of-beer-mock-up-TOONILLA+WEB.png"
                          class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Sample</h5>
+                        <h5 class="card-title">Допустим пиво</h5>
                         <p class="card-text">Небольшой пример текста, который должен основываться на названии карточки и
                             составлять основную часть содержимого карты.</p>
                         <hr>
+                        <a class="btn btn-primary" href="product.php" role="button">Купить</a>
                     </div>
                 </div>
             </div>
